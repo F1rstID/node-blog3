@@ -1,5 +1,5 @@
 const LikesService = require('../services/likes.service');
-const { verifyJWT } = require('../helper/jwt.helper');
+const { getDecodedPayload } = require('../helper/jwt.helper');
 
 class LikesController {
   likesService = new LikesService();
@@ -8,7 +8,7 @@ class LikesController {
     const { postId } = req.params;
     const { Authorization } = req.cookies;
     const accessToken = Authorization.split(' ')[1];
-    const { userId } = verifyJWT(accessToken, process.env.SECRETKEY);
+    const { userId } = getDecodedPayload(accessToken, process.env.SECRETKEY);
 
     const likeEvent = await this.likesService.likeEvent(postId, userId);
     return res.status(201).json(likeEvent);
@@ -17,7 +17,7 @@ class LikesController {
   findLikedPosts = async (req, res) => {
     const { Authorization } = req.cookies;
     const accessToken = Authorization.split(' ')[1];
-    const { userId } = verifyJWT(accessToken, process.env.SECRETKEY);
+    const { userId } = getDecodedPayload(accessToken, process.env.SECRETKEY);
 
     const findLikedPostsData = await this.likesService.findLikedPosts(userId);
     return res.status(200).json({ data: findLikedPostsData });

@@ -1,4 +1,3 @@
-const { valid } = require('joi');
 const LoginService = require('../services/login.service');
 
 class LoginController {

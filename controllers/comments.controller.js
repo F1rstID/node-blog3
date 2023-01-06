@@ -1,5 +1,5 @@
 const CommentsService = require('../services/comments.service');
-const { verifyJWT } = require('../helper/jwt.helper');
+const { getDecodedPayload } = require('../helper/jwt.helper');
 
 class CommentsController {
   commentsService = new CommentsService();
@@ -15,7 +15,7 @@ class CommentsController {
     const { comment } = req.body;
     const { Authorization } = req.cookies;
     const accessToken = Authorization.split(' ')[1];
-    const { userId } = verifyJWT(accessToken, process.env.SECRETKEY);
+    const { userId } = getDecodedPayload(accessToken, process.env.SECRETKEY);
 
     await this.commentsService.createComment(postId, userId, comment);
 

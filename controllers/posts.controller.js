@@ -1,5 +1,5 @@
 const PostsService = require('../services/posts.service');
-const { verifyJWT } = require('../helper/jwt.helper');
+const { getDecodedPayload } = require('../helper/jwt.helper');
 
 class PostsController {
   postsService = new PostsService();
@@ -8,7 +8,7 @@ class PostsController {
     const { Authorization } = req.cookies;
     const { title, content } = req.body;
     const accessToken = Authorization.split(' ')[1];
-    const { userId } = verifyJWT(accessToken, process.env.SECRETKEY);
+    const { userId } = getDecodedPayload(accessToken, process.env.SECRETKEY);
 
     if ({ userId } === false) {
       return res
