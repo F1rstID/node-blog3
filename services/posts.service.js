@@ -55,6 +55,7 @@ class PostService {
       message: '수정 완료',
     };
   };
+  // 게시글 삭제
   deletePost = async (postId) => {
     await this.postRepository.deletePost(postId);
     return{
