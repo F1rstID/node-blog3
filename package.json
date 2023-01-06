@@ -4,7 +4,8 @@
   "description": "5주차",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./app.js",
+    "dev": "nodemon --watch \"./**/*.js\" --exec \"npm start\""
   },
   "repository": {
     "type": "git",

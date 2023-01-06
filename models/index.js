@@ -1,10 +1,10 @@
+require('dotenv').config();
 const Sequelize = require('sequelize');
 const User = require('./user');
 const Post = require('./post');
 const Comment = require('./comment');
 const Like = require('./like');
 const Token = require('./token');
-
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config')[env];
 
