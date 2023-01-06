@@ -1,14 +1,25 @@
 const CommentsRepository = require('../repositories/comments.repository');
-const { Comment } = require('../models');
+const { Comment, User } = require('../models');
 
 class CommentsService {
-  commentsRepository = new CommentsRepository(Comment);
+  commentsRepository = new CommentsRepository(Comment,User);
 
-  findCommentsInPost = async (postId) => {
-    const Comments = await this.commentsRepository.findCommentsInPost(postId);
-
-    return Comments;
+  findComments = async (postId) => {
+    const comments = await this.commentsRepository.findComments(postId);
+    // map 돌리기
+    return comments;
   };
+
+  createComment = async (postId, userId, comment) => {
+    const createComment = await this.commentsRepository.createComment(
+      postId,
+      userId,
+      comment
+    );
+
+    return createComment;
+  };
+
   //
 }
 
