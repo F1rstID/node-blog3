@@ -13,7 +13,7 @@ class CommentsRepository {
         },
       ],
       where: { postId },
-      order: [['commentId', 'DESC']],
+      order: [['createdAt', 'DESC']],
     });
     return findCommentsData;
   };

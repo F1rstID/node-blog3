@@ -23,6 +23,13 @@ class LikesService {
     }
   };
 
+  findLikedPosts = async (userId) => {
+    const findLikedPostsData = await this.likesRepository.findLikedPosts(
+      userId
+    );
+    return findLikedPostsData;
+  };
+
   //
 }
 

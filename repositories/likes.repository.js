@@ -4,6 +4,32 @@ class LikesRepository {
     this.postModel = PostModel;
     this.userModel = UserModel;
   }
+  findLikedPosts = async (userId) => {
+    const likedPostsData = await this.likeModel.findAll({
+      where: { userId },
+      include: [
+        {
+          model: this.postModel,
+          attributes: ['title', 'createdAt', 'updatedAt'],
+          include: [
+            {
+              model: this.likeModel,
+              required: false,
+              attributes: ['userId'],
+            },
+          ],
+        },
+        {
+          model: this.userModel,
+          attributes: ['nickname'],
+        },
+      ],
+      attributes: ['postId'],
+      order: [['createdAt', 'DESC']],
+    });
+    return likedPostsData;
+  };
+
   findLikeId = async (postId, userId) => {
     const findLikeIdData = await this.likeModel.findOne({
       where: { postId, userId },
