@@ -81,6 +81,13 @@ class PostRepository {
     );
     return updatePostData;
   };
+  // 게시글 삭제
+  deletePost = async (postId) => {
+    const deletePostData = await this.postModel.destroy({
+      where: { postId },
+    });
+    return deletePostData;
+  };
 }
 
 module.exports = PostRepository;

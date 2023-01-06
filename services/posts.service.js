@@ -52,7 +52,13 @@ class PostService {
     );
 
     return {
-      message: '수정 완료'
+      message: '수정 완료',
+    };
+  };
+  deletePost = async (postId) => {
+    await this.postRepository.deletePost(postId);
+    return{
+      message:'삭제 완료'
     }
   };
 }
