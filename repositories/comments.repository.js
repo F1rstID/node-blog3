@@ -5,7 +5,7 @@ class CommentsRepository {
   }
 
   findComments = async (postId) => {
-    const comments = await this.commentModel.findAll({
+    const findCommentsData = await this.commentModel.findAll({
       include: [
         {
           model: this.userModel,
@@ -15,16 +15,23 @@ class CommentsRepository {
       where: { postId },
       order: [['commentId', 'DESC']],
     });
-    return comments;
+    return findCommentsData;
   };
 
   createComment = async (postId, userId, comment) => {
-    const comments = await this.commentModel.create({
+    const createCommentData = await this.commentModel.create({
       postId,
       userId,
       comment,
     });
-    return comments;
+    return createCommentData;
+  };
+
+  updateComment = async (commentId, comment) => {
+    const updateCommentData = await this.commentModel.update(
+      { comment },
+      { where: { commentId } }
+    );
   };
 }
 

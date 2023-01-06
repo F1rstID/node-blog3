@@ -31,7 +31,7 @@ class PostsController {
     res.status(200).json({ data: post });
   };
   // 게시글 수정
-  editPost = async (req, res) => {
+  updatePost = async (req, res) => {
     const { postId } = req.params;
     const { title, content } = req.body;
 
