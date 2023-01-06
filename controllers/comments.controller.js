@@ -14,10 +14,10 @@ class CommentsController {
     const { postId } = req.params;
     const { comment } = req.body;
     const { Authorization } = req.cookies;
-    const payload = Authorization.split(' ')[1];
-    const token = verifyJWT(payload, process.env.SECRETKEY);
+    const accessToken = Authorization.split(' ')[1];
+    const { userId } = verifyJWT(accessToken, process.env.SECRETKEY);
 
-    await this.commentsService.createComment(postId, token.userId, comment);
+    await this.commentsService.createComment(postId, userId, comment);
 
     res.status(201).json({ message: '대충 댓글 작성 완료' });
   };
@@ -36,7 +36,7 @@ class CommentsController {
 
     await this.commentsService.delteComment(commentId);
 
-    res.status(201).json({message: '대충 삭제'})
+    res.status(201).json({ message: '대충 삭제' });
   };
 }
 

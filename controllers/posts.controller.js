@@ -7,15 +7,15 @@ class PostsController {
   posting = async (req, res) => {
     const { Authorization } = req.cookies;
     const { title, content } = req.body;
-    const payload = Authorization.split(' ')[1];
-    const token = verifyJWT(payload, process.env.SECRETKEY);
+    const accessToken = Authorization.split(' ')[1];
+    const { userId } = verifyJWT(accessToken, process.env.SECRETKEY);
 
-    if (token === false) {
+    if ({ userId } === false) {
       return res
         .status(412)
         .json({ errorMessage: '유효하지 않은 토큰입니다.' });
     }
-    await this.postsService.createPost(token.userId, title, content);
+    await this.postsService.createPost(userId, title, content);
     res.status(201).json({ message: '작성' });
   };
   // 게시글 전체 조회
