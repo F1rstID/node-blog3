@@ -2,14 +2,23 @@ const { sequelize } = require('../models');
 
 class PostRepository {
   // 의존성 주입
-  constructor(PostsModel) {
-    this.postsModel = PostsModel;
+  constructor(PostsModel, UserModel, LikeModel) {
+    this.postModel = PostsModel;
+    this.userModel = UserModel;
+    this.likeModel = LikeModel;
   }
-  // 코드 작성부
-
+  // 게시글 작성
+  createPost = async (userId, title, content) => {
+    const createPostData = await this.postModel.create({
+      userId,
+      title,
+      content,
+    });
+  };
+  // 게시글 전체 조회
   findAllPost = async () => {
     // 게시글 전체조회
-    const posts = await this.postsModel.findAll({
+    const posts = await this.postModel.findAll({
       attributes: [
         'postId',
         'title',
@@ -19,19 +28,58 @@ class PostRepository {
       ],
       include: [
         {
-          model: User,
+          model: this.userModel,
           attributes: ['userId', 'nickname'],
         },
         {
-          model: Likes,
+          model: this.likeModel,
           attributes: [],
           require: false,
         },
       ],
+      group: ['Post.postId'],
+      order: [['createdAt', 'DESC']],
+      // raw: true,
     });
-    // 게시글 전체조회 map으로 다듬기
 
     return posts;
+  };
+  // 게시글 상세 조회
+  findPostById = async (postId) => {
+    const post = await this.postModel.findOne({
+      attributes: [
+        'postId',
+        'title',
+        'content',
+        'createdAt',
+        'updatedAt',
+        [sequelize.fn('COUNT', sequelize.col('Likes.PostId')), 'likes'],
+      ],
+      where: { postId },
+      include: [
+        {
+          model: this.userModel,
+          attributes: ['userId', 'nickname'],
+        },
+        {
+          model: this.likeModel,
+          attributes: [],
+          require: false,
+        },
+      ],
+      group: ['Post.postId'],
+      order: [['createdAt', 'DESC']],
+    });
+
+    return post;
+  };
+  // 게시글 수정
+  updatePost = async (postId, title, content) => {
+    const updatePostData = await this.postModel.update(
+      { title, content },
+      { where: { postId } }
+    );
+    return updatePostData;
   };
 }
 
