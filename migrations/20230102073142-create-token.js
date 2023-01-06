@@ -16,7 +16,7 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
-      token: {
+      refreshToken: {
         type: Sequelize.STRING,
       },
       createdAt: {

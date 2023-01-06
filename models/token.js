@@ -14,7 +14,7 @@ class Token extends Sequelize.Model {
           type: Sequelize.INTEGER,
           allowNull: false,
         },
-        token: {
+        refreshToken: {
           type: Sequelize.STRING,
         },
       },

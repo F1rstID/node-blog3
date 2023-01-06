@@ -14,6 +14,7 @@ class LoginController {
 
     if (authType === 'Bearer') {
       res.cookie('Authorization', `${authType} ${authToken}`);
+
       return res.status(200).json({ message: authToken });
     }
 

@@ -22,7 +22,7 @@ class LoginService {
     }
     // 암호화 추가 해야함.
     const token = jwt.sign({ userId: userData.userId }, process.env.SECRETKEY, {
-      expiresIn: '300s',
+      expiresIn: '3s',
     });
     return { authType: 'Bearer', authToken: token };
   };

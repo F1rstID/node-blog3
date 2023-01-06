@@ -8,9 +8,10 @@ class PostsController {
     const { Authorization } = req.cookies;
     const { title, content } = req.body;
     const accessToken = Authorization.split(' ')[1];
+
     const { userId } = getDecodedPayload(accessToken, process.env.SECRETKEY);
 
-    if ({ userId } === false) {
+    if (userId === false) {
       return res
         .status(412)
         .json({ errorMessage: '유효하지 않은 토큰입니다.' });

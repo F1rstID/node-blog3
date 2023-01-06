@@ -36,10 +36,15 @@ function validateRefreshToken(refreshToken, secretKey) {
   }
 }
 
+function decodeToken(token) {
+  return jwt.decode(token);
+}
+
 module.exports = {
   getDecodedPayload,
   createAccessToken,
   createRefreshToken,
   validateAccessToken,
   validateRefreshToken,
+  decodeToken,
 };

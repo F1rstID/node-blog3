@@ -1,12 +1,11 @@
 require('dotenv').config();
-const Token = require('../models');
+const { Token } = require('../models');
 const {
-  getDecodedPayload,
   createAccessToken,
   createRefreshToken,
   validateAccessToken,
   validateRefreshToken,
-  getDecodedPayload,
+  decodeToken,
 } = require('../helper/jwt.helper');
 module.exports = async (req, res, next) => {
   try {
@@ -18,7 +17,7 @@ module.exports = async (req, res, next) => {
 
     const token = Authorization.split(' ')[1];
 
-    const { userId } = getDecodedPayload(token, process.env.SECRETKEY);
+    const { userId } = decodeToken(token, process.env.SECRETKEY);
 
     const accessToken = validateAccessToken(token, process.env.SECRETKEY);
 
@@ -55,14 +54,15 @@ module.exports = async (req, res, next) => {
       if (validateRefreshToken(refreshToken, process.env.SECRETKEY)) {
         // AccessToken은 검증에 실패 했지만 RefreshToken이 유효함.
         // 따라서 새로운 AccessToken을 발급 한다.
-        const newAccessToken = createAccessToken(uesrId, process.env.SECRETKEY);
+        const newAccessToken = createAccessToken(userId, process.env.SECRETKEY);
         // 발급후 쿠키에 등록.
-        res.cookie('Authorization', newAccessToken);
+        // res.cookie('Authorization', `Bearer ${newAccessToken}`);
+        req.cookies.Authorization = `Bearer ${newAccessToken}`;
         // AccessToken 발급 했으니 다음으로.
         next();
       }
     }
   } catch (err) {
-    console.log(err);
+    return res.status(400).json({ errorMessage: err.message });
   }
 };
