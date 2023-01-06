@@ -41,26 +41,24 @@ class PostService {
       likes: postData.likes,
     };
   };
+  //
+  findPostById = async (postId) => {
+    const findPostByPk = await this.postRepository.findPostById(postId);
+    return findPostByPk;
+  };
   // 게시글 수정
   updatePost = async (postId, title, content) => {
-    // 게시글이 존재 하는지 확인용
-    // const findPost = await this.postRepository.findPostById(postId);
     const updatePostData = await this.postRepository.updatePost(
       postId,
       title,
       content
     );
-
-    return {
-      message: '수정 완료',
-    };
+    return updatePostData;
   };
   // 게시글 삭제
   deletePost = async (postId) => {
-    await this.postRepository.deletePost(postId);
-    return{
-      message:'삭제 완료'
-    }
+    const deletePostData = await this.postRepository.deletePost(postId);
+    return deletePostData;
   };
 }
 

@@ -73,6 +73,11 @@ class PostRepository {
 
     return post;
   };
+  // 게시글을 기본키를 이용하여 검색
+  findPostByPk = async (postId) => {
+    const findPostByPkData = await this.postModel.findByPk(postId);
+    return findPostByPkData;
+  };
   // 게시글 수정
   updatePost = async (postId, title, content) => {
     const updatePostData = await this.postModel.update(

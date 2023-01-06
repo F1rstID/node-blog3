@@ -1,7 +1,7 @@
 const SignupRepository = require('../repositories/signup.repository');
 const { User } = require('../models');
 const { isRegExpValidation } = require('../helper/regExp.helper');
-const { beforeFindAfterExpandIncludeAll } = require('../models/user');
+const bcrypt = require('bcrypt');
 
 class SignupService {
   signupRepository = new SignupRepository(User);
@@ -59,8 +59,12 @@ class SignupService {
         errorMessage: '이미 사용중인 닉네임 입니다.',
       };
     }
+    const encryptedPassword = bcrypt.hashSync(
+      password,
+      Number(process.env.BCRYPTSALT)
+    );
 
-    await this.signupRepository.createUserData(nickname, password);
+    await this.signupRepository.createUserData(nickname, encryptedPassword);
     return {
       success: true,
       statusCode: 201,

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const SignupService = require('../services/signup.service');
 
 class SignupController {
@@ -6,6 +7,7 @@ class SignupController {
   signup = async (req, res) => {
     try {
       const { nickname, password, confirm } = req.body;
+
       const createUser = await this.signupService.createUserData(
         nickname,
         password,
@@ -22,7 +24,8 @@ class SignupController {
       return res
         .status(createUser.statusCode)
         .json({ errorMessage: createUser.errorMessage });
-    } catch {
+    } catch (err) {
+      console.log(err);
       res
         .status(400)
         .json({ errorMessage: '요청한 데이터 형식이 올바르지 않습니다.' });

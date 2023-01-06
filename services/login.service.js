@@ -1,20 +1,17 @@
 const LoginRepository = require('../repositories/login.repository');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const { User } = require('../models');
 
 class LoginService {
   loginRepository = new LoginRepository(User);
   //
-  findUserData = async (nickname, password) => {
-    const findUser = await this.loginRepository.findUserData(
-      nickname,
-      password
-    );
+  findUserData = async (nickname) => {
+    const findUser = await this.loginRepository.findUserData(nickname);
     return findUser;
   };
   validateUser = async (nickname, password) => {
-    const userData = await this.findUserData(nickname, password);
-
+    const userData = await this.findUserData(nickname);
     if (!userData) {
       return {
         success: false,
@@ -22,7 +19,16 @@ class LoginService {
         errorMessage: '닉네임 또는 패스워드를 확인해주세요.',
       };
     }
-    // 암호화 추가 해야함.
+    const validatePassword = bcrypt.compareSync(password, userData.password);
+
+    if (!validatePassword) {
+      return {
+        success: false,
+        statusCode: 412,
+        errorMessage: '닉네임 또는 패스워드를 확인해주세요.',
+      };
+    }
+
     const accessToken = jwt.sign(
       { userId: userData.userId },
       process.env.SECRETKEY,

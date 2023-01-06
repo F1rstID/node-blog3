@@ -1,15 +1,11 @@
-const { Op } = require('sequelize');
-
 class LoginRepository {
   constructor(LoginModel) {
     this.loginModel = LoginModel;
   }
   //
-  findUserData = async (nickname, password) => {
+  findUserData = async (nickname) => {
     const user = await this.loginModel.findOne({
-      where: {
-        [Op.and]: [{ nickname }, { password }],
-      },
+      where: { nickname },
     });
     return user;
   };
