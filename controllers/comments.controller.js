@@ -5,9 +5,13 @@ class CommentsController {
   commentsService = new CommentsService();
   // 댓글 조회
   getComments = async (req, res) => {
-    const { postId } = req.params;
-    const comments = await this.commentsService.findComments(postId);
-    res.status(200).json({ data: comments });
+    try {
+      const { postId } = req.params;
+      const comments = await this.commentsService.findComments(postId);
+      res.status(200).json({ data: comments });
+    } catch {
+      res.status(400).json({ errorMessage: '댓글 조회에 실패하였습니다.' });
+    }
   };
   // 댓글 작성
   craeteComment = async (req, res) => {

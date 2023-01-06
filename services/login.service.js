@@ -17,14 +17,25 @@ class LoginService {
 
     if (!userData) {
       return {
+        success: false,
+        statusCode: 412,
         errorMessage: '닉네임 또는 패스워드를 확인해주세요.',
       };
     }
     // 암호화 추가 해야함.
-    const token = jwt.sign({ userId: userData.userId }, process.env.SECRETKEY, {
-      expiresIn: '3s',
-    });
-    return { authType: 'Bearer', authToken: token };
+    const accessToken = jwt.sign(
+      { userId: userData.userId },
+      process.env.SECRETKEY,
+      {
+        expiresIn: '30s',
+      }
+    );
+    // return { authType: 'Bearer', authToken: accessToken };
+    return {
+      success: true,
+      statusCode: 201,
+      message: `Bearer ${accessToken}`,
+    };
   };
 }
 

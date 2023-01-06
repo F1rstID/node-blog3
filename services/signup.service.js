@@ -1,6 +1,7 @@
 const SignupRepository = require('../repositories/signup.repository');
 const { User } = require('../models');
 const { isRegExpValidation } = require('../helper/regExp.helper');
+const { beforeFindAfterExpandIncludeAll } = require('../models/user');
 
 class SignupService {
   signupRepository = new SignupRepository(User);
@@ -18,25 +19,33 @@ class SignupService {
 
     if (password !== confirm) {
       return {
+        success: false,
+        statusCode: 412,
         errorMessage: '패스워드가 일치하지 않습니다.',
       };
     }
 
     if (!isRegExpValidation(nickname, nicknameRegExp)) {
       return {
+        success: false,
+        statusCode: 412,
         errorMessage: '닉네임의 형식이 일치하지 않습니다.',
       };
     }
 
     if (!isRegExpValidation(password, passwordRegExp)) {
       return {
-        errorMessage: '비밀번호의 형식이 일치하지 않습니다.',
+        success: false,
+        statusCode: 412,
+        errorMessage: '패스워드의 형식이 일치하지 않습니다.',
       };
     }
 
     if (isRegExpValidation(password, incluePasswordInNicknameRegExp)) {
       return {
-        errorMessage: '비밀번호에 닉네임이 포함되어 있습니다.',
+        success: false,
+        statusCode: 412,
+        errorMessage: '패스워드에 닉네임이 포함되어 있습니다.',
       };
     }
 
@@ -45,12 +54,16 @@ class SignupService {
 
     if (findUser) {
       return {
+        success: false,
+        statusCode: 412,
         errorMessage: '이미 사용중인 닉네임 입니다.',
       };
     }
 
     await this.signupRepository.createUserData(nickname, password);
     return {
+      success: true,
+      statusCode: 201,
       message: '회원 가입에 성공하였습니다.',
     };
   };
