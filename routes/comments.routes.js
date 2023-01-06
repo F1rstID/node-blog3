@@ -7,5 +7,6 @@ const commentsController = new CommentsController();
 router.get('/:postId', commentsController.getComments);
 router.post('/:postId', commentsController.craeteComment);
 router.put('/:commentId', commentsController.updateComment);
+router.delete('/:commentId', commentsController.deleteComment);
 
 module.exports = router;

@@ -28,7 +28,15 @@ class CommentsController {
 
     await this.commentsService.updateComment(commentId, comment);
 
-    res.status(201).json({message: '대충 업뎃'})
+    res.status(201).json({ message: '대충 업뎃' });
+  };
+
+  deleteComment = async (req, res) => {
+    const { commentId } = req.params;
+
+    await this.commentsService.delteComment(commentId);
+
+    res.status(201).json({message: '대충 삭제'})
   };
 }
 

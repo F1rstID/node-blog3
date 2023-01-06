@@ -32,6 +32,14 @@ class CommentsRepository {
       { comment },
       { where: { commentId } }
     );
+    return updateCommentData;
+  };
+
+  deleteComment = async (commentId) => {
+    const deleteCommentData = await this.commentModel.destroy({
+      where: { commentId },
+    });
+    return deleteCommentData;
   };
 }
 
