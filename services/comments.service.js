@@ -20,6 +20,13 @@ class CommentsService {
     return createCommentData;
   };
   //
+  findComment = async (commentId) => {
+    const findCommentData = await this.commentsRepository.findComment(
+      commentId
+    );
+    return findCommentData;
+  };
+  //
   updateComment = async (commentId, comment) => {
     const updateCommentData = await this.commentsRepository.updateComment(
       commentId,
@@ -28,7 +35,7 @@ class CommentsService {
     return updateCommentData;
   };
 
-  delteComment = async (commentId) => {
+  deleteComment = async (commentId) => {
     const deleteCommentData = await this.commentsRepository.deleteComment(
       commentId
     );
