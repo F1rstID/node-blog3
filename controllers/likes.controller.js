@@ -4,15 +4,18 @@ class LikesController {
   likesService = new LikesService();
 
   likeEvent = async (req, res) => {
-    try {
-      const { postId } = req.params;
-      const userId = res.locals.user;
+    const { postId } = req.params;
+    const userId = res.locals.user;
 
-      const likeEvent = await this.likesService.likeEvent(postId, userId);
-      return res.status(201).json(likeEvent);
-    } catch {
-      return res.status(400).json({ errorMessage: '좋아요에 실패하였습니다.' });
+    const likeEvent = await this.likesService.likeEvent(postId, userId);
+    if (likeEvent.success) {
+      return res
+        .status(likeEvent.statusCode)
+        .json({ message: likeEvent.message });
     }
+    return res
+      .status(likeEvent.statusCode)
+      .json({ errorMessage: likeEvent.errorMessage });
   };
 
   findLikedPosts = async (req, res) => {

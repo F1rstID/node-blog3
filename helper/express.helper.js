@@ -1,1 +1,8 @@
-// 에러 메세지 마다 적절한 status code를 매칭 하는 함수
+function resCreater(success, statusCode, message) {
+  if (success) {
+    return { success: true, statusCode: statusCode, message: message };
+  }
+  return { success: false, statusCode: statusCode, errorMessage: message };
+}
+
+module.exports = { resCreater };

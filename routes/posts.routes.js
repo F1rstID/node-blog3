@@ -6,6 +6,7 @@ const postsController = new PostsController();
 
 const tokenValidateMiddleware = require('../middleware/tokenValidateMiddleware');
 
+
 router.get('/', postsController.getPosts);
 router.get('/:postId', postsController.getPost);
 router.post('/', tokenValidateMiddleware, postsController.posting);

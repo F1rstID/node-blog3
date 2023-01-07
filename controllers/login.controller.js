@@ -4,7 +4,6 @@ class LoginController {
   loginService = new LoginService();
 
   login = async (req, res) => {
-    try {
       const { nickname, password } = req.body;
       const validateUser = await this.loginService.validateUser(
         nickname,
@@ -23,10 +22,6 @@ class LoginController {
       return res
         .status(validateUser.statusCode)
         .json({ errorMessage: validateUser.errorMessage });
-    } catch (err) {
-      console.log(err);
-      res.status(400).json({ errorMessage: '로그인에 실패하였습니다' });
-    }
   };
 }
 
