@@ -6,8 +6,22 @@ const postsController = new PostsController();
 
 const tokenValidateMiddleware = require('../middleware/tokenValidateMiddleware');
 
-
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    Book:
+ *      type: object
+ *       required:
+ *        - title
+ *        - author
+ *       properties:
+ *        id:
+ *          type: string
+ *          description: hihi
+ */
 router.get('/', postsController.getPosts);
+
 router.get('/:postId', postsController.getPost);
 router.post('/', tokenValidateMiddleware, postsController.posting);
 router.put('/:postId', tokenValidateMiddleware, postsController.updatePost);

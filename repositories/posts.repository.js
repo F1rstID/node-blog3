@@ -1,5 +1,4 @@
 const { sequelize } = require('../models');
-
 class PostRepository {
   // 의존성 주입
   constructor(PostsModel, UserModel, LikeModel) {
@@ -92,6 +91,10 @@ class PostRepository {
       where: { postId },
     });
     return deletePostData;
+  };
+  findtest = async () => {
+    const testData = await this.postModel.findAll();
+    return testData;
   };
 }
 

@@ -18,6 +18,7 @@ const sequelize = new Sequelize(
 );
 
 db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
 db.User = User;
 db.Post = Post;

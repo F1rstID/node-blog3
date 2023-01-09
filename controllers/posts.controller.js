@@ -21,7 +21,8 @@ class PostsController {
     try {
       const posts = await this.postsService.findAllPost();
       res.status(200).json({ data: posts });
-    } catch {
+    } catch (err) {
+      console.log(err);
       res.status(400).json({ errorMessage: '게시글 조회에 실패하였습니다.' });
     }
   };
