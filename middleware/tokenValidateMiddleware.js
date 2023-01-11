@@ -22,6 +22,7 @@ module.exports = async (req, res, next) => {
     const { userId } = decodeToken(token, process.env.SECRETKEY);
 
     const accessToken = validateAccessToken(token, process.env.SECRETKEY);
+    console.log(accessToken)
 
     const findRefreshToken = await Token.findOne({
       where: { userId },
@@ -39,6 +40,7 @@ module.exports = async (req, res, next) => {
         // 두 토큰이 전부 검증 되었으니 환경변수에 userId를 담은 후 넘어간다.
         res.locals.user = userId;
         next();
+        return;
       }
       // AccessToken은 검증에 성공 했지만 RefreshToken은 검증하지 못했다.
       // RefreshToken을 발급한다.
@@ -52,6 +54,7 @@ module.exports = async (req, res, next) => {
       res.locals.user = userId;
 
       next();
+      return;
     }
 
     if (!accessToken) {
@@ -69,6 +72,7 @@ module.exports = async (req, res, next) => {
         req.cookies.Authorization = `Bearer ${newAccessToken}`;
         // AccessToken 발급 했으니 다음으로.
         next();
+        return;
       }
     }
   } catch (err) {

@@ -19,7 +19,8 @@ class LikesService {
         await this.likesRepository.createLike(postId, userId);
         return resCreater(true, 201, '좋아요를 등록하였습니다.');
       }
-    } catch {
+    } catch (err) {
+      console.log(err)
       return resCreater(false, 400, '좋아요에 실패하였습니다.');
     }
   };

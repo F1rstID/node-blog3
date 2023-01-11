@@ -7,7 +7,7 @@ class LikesController {
     const { postId } = req.params;
     const userId = res.locals.user;
 
-    const likeEvent = await this.likesService.likeEvent(postId, userId);
+    const likeEvent = await this.likesService.likeEvent(Number(postId), userId);
     if (likeEvent.success) {
       return res
         .status(likeEvent.statusCode)
