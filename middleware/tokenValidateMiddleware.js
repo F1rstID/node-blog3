@@ -76,7 +76,7 @@ module.exports = async (req, res, next) => {
     }
   } catch (err) {
     // 쿠키에 토큰을 담지 않고 접근했을 경우.
-    return res.status(400).json({ errorMessage: err.message });
+    res.status(400).json({ errorMessage: err.message });
   }
 };
 // 이미 미들웨어에서 토큰 검증 하고 있으니 컨트롤러에서 검증파트 지우기.

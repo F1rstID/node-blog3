@@ -1,3 +1,6 @@
+require('express-async-errors');
+const { InternalServerError } = require('../helper/error.handling.helper');
+
 class LoginRepository {
   constructor(LoginModel) {
     this.loginModel = LoginModel;
@@ -5,10 +8,14 @@ class LoginRepository {
 
   //
   findUserData = async (nickname) => {
-    const user = await this.loginModel.findOne({
-      where: { nickname },
-    });
-    return user;
+    try {
+      const user = await this.loginModel.findOne({
+        where: { nickname },
+      });
+      return user;
+    } catch {
+      throw new InternalServerError('DB 에러');
+    }
   };
 }
 

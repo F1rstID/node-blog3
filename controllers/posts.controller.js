@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const Joi = require('joi');
 const PostsService = require('../services/posts.service');
 const { PreconditionFailed } = require('../helper/error.handling.helper');
@@ -15,7 +16,7 @@ class PostsController {
   posting = async (req, res) => {
     const resultSchema = postSchema.validate(req.body);
 
-    if (resultSchema.error) { throw new PreconditionFailed('데이터 형식이 올바르지 않습니다..'); }
+    if (resultSchema.error) throw new PreconditionFailed('데이터 형식이 올바르지 않습니다..');
 
     const { title, content } = resultSchema.value;
 

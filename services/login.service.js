@@ -18,7 +18,7 @@ class LoginService {
     try {
       const userData = await this.findUserData(nickname);
 
-      if (!userData) { throw new PreconditionFailed('닉네임 또는 패스워드를 확인해주세요.'); }
+      if (!userData) throw new PreconditionFailed('닉네임 또는 패스워드를 확인해주세요.');
 
       const validatePassword = bcrypt.compareSync(password, userData.password);
 

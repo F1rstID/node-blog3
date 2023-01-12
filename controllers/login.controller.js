@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const LoginService = require('../services/login.service');
 require('express-async-errors');
 

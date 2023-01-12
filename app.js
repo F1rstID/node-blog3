@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
-const swaggerUi = require('swagger-ui-express');
-const sawggerJsDoc = require('swagger-jsdoc');
+// const swaggerUi = require('swagger-ui-express');
+// const sawggerJsDoc = require('swagger-jsdoc');
 const errorHandler = require('./middleware/error.handling.middleware');
 const notFoundHandler = require('./middleware/404.middleware');
 const indexRouter = require('./routes');
@@ -11,26 +11,27 @@ const app = express();
 const { env } = process;
 const port = env.EXPRESS_PORT;
 
-const options = {
-  swaggerDefinition: {
-    openapi: '3.0.3',
-    info: {
-      title: '5주차 과제',
-      version: '1.0.0',
-      description: '5주차 과제 API 명세',
-    },
-    servers: [
-      {
-        url: 'http://localhost:3000',
-      },
-    ],
-  },
-  apis: ['../routes/*.js'],
-};
+// const options = {
+//   swaggerDefinition: {
+//     openapi: '3.0.3',
+//     info: {
+//       title: '5주차 과제',
+//       version: '1.0.0',
+//       description: '5주차 과제 API 명세',
+//     },
+//     servers: [
+//       {
+//         url: 'http://localhost:3000',
+//       },
+//     ],
+//   },
+//   apis: ['../routes/*.js'],
+// };
 
-const specs = sawggerJsDoc(options);
+// const specs = sawggerJsDoc(options);
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
 app.use(express.json());
 app.get('/', (req, res) => {
   res.send(

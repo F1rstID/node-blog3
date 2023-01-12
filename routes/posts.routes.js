@@ -23,8 +23,8 @@ const tokenValidateMiddleware = require('../middleware/tokenValidateMiddleware')
  *          description: hihi
  */
 router.get('/', postsController.getPosts);
-
 router.get('/:postId', postsController.getPost);
+
 router.post('/', tokenValidateMiddleware, postsController.posting);
 router.put('/:postId', tokenValidateMiddleware, postsController.updatePost);
 router.delete('/:postId', tokenValidateMiddleware, postsController.deletePost);
