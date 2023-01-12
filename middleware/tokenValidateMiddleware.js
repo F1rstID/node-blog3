@@ -22,7 +22,6 @@ module.exports = async (req, res, next) => {
     const { userId } = decodeToken(token, process.env.SECRETKEY);
 
     const accessToken = validateAccessToken(token, process.env.SECRETKEY);
-    console.log(accessToken)
 
     const findRefreshToken = await Token.findOne({
       where: { userId },
@@ -66,7 +65,7 @@ module.exports = async (req, res, next) => {
         // 발급후 쿠키와 환경변수에 등록.
         res.locals.user = getDecodedPayload(
           newAccessToken,
-          process.env.SECRETKEY
+          process.env.SECRETKEY,
         ).userId;
         // res.cookie('Authorization', `Bearer ${newAccessToken}`);
         req.cookies.Authorization = `Bearer ${newAccessToken}`;

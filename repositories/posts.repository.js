@@ -1,4 +1,5 @@
 const { sequelize } = require('../models');
+
 class PostRepository {
   // 의존성 주입
   constructor(PostsModel, UserModel, LikeModel) {
@@ -6,6 +7,7 @@ class PostRepository {
     this.userModel = UserModel;
     this.likeModel = LikeModel;
   }
+
   // 게시글 작성
   createPost = async (userId, title, content) => {
     const createPostData = await this.postModel.create({
@@ -13,7 +15,9 @@ class PostRepository {
       title,
       content,
     });
+    return createPostData;
   };
+
   // 게시글 전체 조회
   findAllPost = async () => {
     // 게시글 전체조회
@@ -43,6 +47,7 @@ class PostRepository {
 
     return posts;
   };
+
   // 게시글 상세 조회
   findPostById = async (postId) => {
     const post = await this.postModel.findOne({
@@ -72,19 +77,22 @@ class PostRepository {
 
     return post;
   };
+
   // 게시글을 기본키를 이용하여 검색
   findPostByPk = async (postId) => {
     const findPostByPkData = await this.postModel.findByPk(postId);
     return findPostByPkData;
   };
+
   // 게시글 수정
   updatePost = async (postId, title, content) => {
     const updatePostData = await this.postModel.update(
       { title, content },
-      { where: { postId } }
+      { where: { postId } },
     );
     return updatePostData;
   };
+
   // 게시글 삭제
   deletePost = async (postId) => {
     const deletePostData = await this.postModel.destroy({
@@ -92,6 +100,7 @@ class PostRepository {
     });
     return deletePostData;
   };
+
   findtest = async () => {
     const testData = await this.postModel.findAll();
     return testData;

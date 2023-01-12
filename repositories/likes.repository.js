@@ -4,6 +4,7 @@ class LikesRepository {
     this.postModel = PostModel;
     this.userModel = UserModel;
   }
+
   findLikedPosts = async (userId) => {
     const likedPostsData = await this.likeModel.findAll({
       where: { userId },
@@ -39,12 +40,10 @@ class LikesRepository {
   };
 
   createLike = async (postId, userId) => {
-    console.log(typeof postId, typeof userId)
     const createLikeData = await this.likeModel.create({
       postId,
       userId,
     });
-    console.log('create', createLikeData)
     return createLikeData;
   };
 
@@ -52,7 +51,6 @@ class LikesRepository {
     const deleteLikeData = await this.likeModel.destroy({
       where: { likeId },
     });
-    console.log('delete', deleteLikeData)
     return deleteLikeData;
   };
 }

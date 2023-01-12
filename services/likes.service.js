@@ -1,6 +1,8 @@
+/* eslint-disable consistent-return */
 const LikesRepository = require('../repositories/likes.repository');
 const { Like, Post, User } = require('../models');
 const { resCreater } = require('../helper/express.helper');
+const { BadRequestError } = require('../helper/error.handling.helper');
 
 class LikesService {
   likesRepository = new LikesRepository(Like, Post, User);
@@ -20,14 +22,13 @@ class LikesService {
         return resCreater(true, 201, '좋아요를 등록하였습니다.');
       }
     } catch (err) {
-      console.log(err)
-      return resCreater(false, 400, '좋아요에 실패하였습니다.');
+      throw new BadRequestError(err.message);
     }
   };
 
   findLikedPosts = async (userId) => {
     const findLikedPostsData = await this.likesRepository.findLikedPosts(
-      userId
+      userId,
     );
     return findLikedPostsData;
   };

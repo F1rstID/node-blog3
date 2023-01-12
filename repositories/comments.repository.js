@@ -41,7 +41,7 @@ class CommentsRepository {
     });
     return deleteCommentData;
   };
-  
+
   findComment = async (commentId) => {
     const findCommentData = await this.commentModel.findByPk(commentId);
     return findCommentData;

@@ -2,6 +2,7 @@ class LoginRepository {
   constructor(LoginModel) {
     this.loginModel = LoginModel;
   }
+
   //
   findUserData = async (nickname) => {
     const user = await this.loginModel.findOne({

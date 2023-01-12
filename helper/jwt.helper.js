@@ -37,7 +37,6 @@ function validateRefreshToken(refreshToken, secretKey) {
 }
 
 function decodeToken(token) {
-  console.log(jwt.decode(token))
   return jwt.decode(token);
 }
 

@@ -1,4 +1,6 @@
+/* eslint-disable consistent-return */
 const LikesService = require('../services/likes.service');
+require('express-async-errors');
 
 class LikesController {
   likesService = new LikesService();
@@ -13,21 +15,12 @@ class LikesController {
         .status(likeEvent.statusCode)
         .json({ message: likeEvent.message });
     }
-    return res
-      .status(likeEvent.statusCode)
-      .json({ errorMessage: likeEvent.errorMessage });
   };
 
   findLikedPosts = async (req, res) => {
-    try {
-      userId = res.locals.user;
-      const findLikedPostsData = await this.likesService.findLikedPosts(userId);
-      return res.status(200).json({ data: findLikedPostsData });
-    } catch {
-      return res
-        .status(400)
-        .json({ errorMessage: '게시글 조회에 실패하였습니다.' });
-    }
+    const userId = res.locals.user;
+    const findLikedPostsData = await this.likesService.findLikedPosts(userId);
+    return res.status(200).json({ data: findLikedPostsData });
   };
   //
 }
